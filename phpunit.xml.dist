@@ -1,30 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit bootstrap="Tests/bootstrap.php" colors="true">
-    <testsuites>
-        <testsuite name="FOSOAuthServerBundle Test Suite">
-            <directory suffix="Test.php">./Tests</directory>
-        </testsuite>
-    </testsuites>
-
-    <filter>
-        <whitelist>
-            <directory>./</directory>
-            <exclude>
-                <directory>./Resources</directory>
-                <directory>./Tests</directory>
-                <directory>./vendor</directory>
-                <file>./Propel/AccessToken.php</file>
-                <file>./Propel/AccessTokenQuery.php</file>
-                <file>./Propel/RefreshToken.php</file>
-                <file>./Propel/RefreshTokenQuery.php</file>
-                <directory suffix="Peer.php">./Propel</directory>
-                <directory>./Propel/map</directory>
-                <directory>./Propel/om</directory>
-            </exclude>
-        </whitelist>
-    </filter>
-
-    <listeners>
-        <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener" />
-    </listeners>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" bootstrap="Tests/bootstrap.php" colors="true" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd">
+  <coverage>
+    <include>
+      <directory>./</directory>
+    </include>
+    <exclude>
+      <directory>./Resources</directory>
+      <directory>./Tests</directory>
+      <directory>./vendor</directory>
+      <file>./Propel/AccessToken.php</file>
+      <file>./Propel/AccessTokenQuery.php</file>
+      <file>./Propel/RefreshToken.php</file>
+      <file>./Propel/RefreshTokenQuery.php</file>
+      <directory suffix="Peer.php">./Propel</directory>
+      <directory>./Propel/map</directory>
+      <directory>./Propel/om</directory>
+    </exclude>
+  </coverage>
+  <php>
+    <env name="SYMFONY_DEPRECATIONS_HELPER" value="max[total]=200"/>
+    <ini name="error_reporting" value="-1"/>
+    <server name="SHELL_VERBOSITY" value="-1"/>
+  </php>
+  <testsuites>
+    <testsuite name="FOSAuthServerBundle Test Suite">
+      <directory suffix="Test.php">./Tests</directory>
+    </testsuite>
+  </testsuites>
+  <listeners>
+    <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener"/>
+  </listeners>
+  <extensions>
+    <extension class="FOS\OAuthServerBundle\Tests\BypassFinalHook"/>
+  </extensions>
 </phpunit>

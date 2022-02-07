@@ -11,19 +11,15 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace FOS\OAuthServerBundle\Tests\Propel;
+namespace FOS\OAuthServerBundle\Tests;
 
-use FOS\OAuthServerBundle\Tests\TestCase;
+use DG\BypassFinals;
+use PHPUnit\Runner\BeforeTestHook;
 
-/**
- * @group propel
- */
-class PropelTestCase extends TestCase
+final class BypassFinalHook implements BeforeTestHook
 {
-    public function setUp(): void
+    public function executeBeforeTest(string $test): void
     {
-        if (!class_exists('\Propel')) {
-            $this->markTestSkipped('Propel is not installed.');
-        }
+        BypassFinals::enable();
     }
 }

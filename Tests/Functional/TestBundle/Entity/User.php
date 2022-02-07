@@ -57,14 +57,20 @@ class User implements UserInterface
         $this->password = $password;
     }
 
+    /**
+     * @return string|null
+     */
     public function getSalt()
     {
         return null;
     }
 
+    /**
+     * @return string
+     */
     public function getUsername()
     {
-        return $this->getId();
+        return (string) $this->getId();
     }
 
     public function eraseCredentials(): void

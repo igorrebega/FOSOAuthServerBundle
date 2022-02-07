@@ -47,25 +47,22 @@ class FOSOAuthServerBundleTest extends \PHPUnit\Framework\TestCase
         ;
 
         $containerBuilder
-            ->expects($this->at(0))
             ->method('getExtension')
             ->with('security')
             ->willReturn($securityExtension)
         ;
 
         $securityExtension
-            ->expects($this->at(0))
             ->method('addSecurityListenerFactory')
             ->with(new OAuthFactory())
             ->willReturn(null)
         ;
 
         $containerBuilder
-            ->expects($this->at(1))
             ->method('addCompilerPass')
             ->withConsecutive(
-                new Compiler\GrantExtensionsCompilerPass(),
-                new Compiler\RequestStackCompilerPass()
+                [new Compiler\GrantExtensionsCompilerPass()],
+                [new Compiler\RequestStackCompilerPass()],
             )
             ->willReturnOnConsecutiveCalls(
                 $containerBuilder,

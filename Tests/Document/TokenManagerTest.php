@@ -13,12 +13,13 @@ declare(strict_types=1);
 
 namespace FOS\OAuthServerBundle\Tests\Document;
 
-use Doctrine\MongoDB\Query\Query;
 use Doctrine\ODM\MongoDB\DocumentManager;
-use Doctrine\ODM\MongoDB\DocumentRepository;
 use Doctrine\ODM\MongoDB\Query\Builder;
+use Doctrine\ODM\MongoDB\Query\Query;
+use Doctrine\ODM\MongoDB\Repository\DocumentRepository;
 use FOS\OAuthServerBundle\Document\AccessToken;
 use FOS\OAuthServerBundle\Document\TokenManager;
+use stdClass;
 
 /**
  * @group time-sensitive
@@ -78,7 +79,7 @@ class TokenManagerTest extends \PHPUnit\Framework\TestCase
     public function testFindTokenByToken(): void
     {
         $randomToken = \random_bytes(5);
-        $randomResult = \random_bytes(5);
+        $returnObject = new stdClass();
 
         $this->repository
             ->expects($this->once())
@@ -86,10 +87,10 @@ class TokenManagerTest extends \PHPUnit\Framework\TestCase
             ->with([
                 'token' => $randomToken,
             ])
-            ->willReturn($randomResult)
+            ->willReturn($returnObject)
         ;
 
-        $this->assertSame($randomResult, $this->instance->findTokenByToken($randomToken));
+        $this->assertSame($returnObject, $this->instance->findTokenByToken($randomToken));
     }
 
     public function testUpdateTokenPersistsAndFlushes(): void

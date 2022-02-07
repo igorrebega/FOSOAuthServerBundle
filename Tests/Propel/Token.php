@@ -13,17 +13,8 @@ declare(strict_types=1);
 
 namespace FOS\OAuthServerBundle\Tests\Propel;
 
-use FOS\OAuthServerBundle\Tests\TestCase;
+use FOS\OAuthServerBundle\Propel\Token as AbstractToken;
 
-/**
- * @group propel
- */
-class PropelTestCase extends TestCase
+class Token extends AbstractToken
 {
-    public function setUp(): void
-    {
-        if (!class_exists('\Propel')) {
-            $this->markTestSkipped('Propel is not installed.');
-        }
-    }
 }

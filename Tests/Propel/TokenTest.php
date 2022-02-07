@@ -13,10 +13,9 @@ declare(strict_types=1);
 
 namespace FOS\OAuthServerBundle\Tests\Propel;
 
-use FOS\OAuthServerBundle\Propel\Token as AbstractToken;
-
 /**
  * @group time-sensitive
+ * @group propel
  *
  * Class TokenTest
  */
@@ -59,9 +58,4 @@ class TokenTest extends PropelTestCase
 
         $this->assertSame(60, $token->getExpiresIn());
     }
-}
-
-// The Token class is abstract (concrete inheritance)
-class Token extends AbstractToken
-{
 }

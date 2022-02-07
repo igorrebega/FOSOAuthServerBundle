@@ -19,12 +19,13 @@ use FOS\OAuthServerBundle\Propel\AuthCodeQuery;
 
 /**
  * @group time-sensitive
+ * @group propel
  *
  * Class AuthCodeManagerTest
  */
 class AuthCodeManagerTest extends PropelTestCase
 {
-    const AUTH_CODE_CLASS = 'FOS\OAuthServerBundle\Propel\AuthCode';
+    private const AUTH_CODE_CLASS = 'FOS\OAuthServerBundle\Propel\AuthCode';
 
     protected $manager;
 

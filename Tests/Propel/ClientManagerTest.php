@@ -17,9 +17,12 @@ use FOS\OAuthServerBundle\Propel\Client;
 use FOS\OAuthServerBundle\Propel\ClientManager;
 use FOS\OAuthServerBundle\Propel\ClientQuery;
 
+/**
+ * @group propel
+ */
 class ClientManagerTest extends PropelTestCase
 {
-    const CLIENT_CLASS = 'FOS\OAuthServerBundle\Propel\Client';
+    private const CLIENT_CLASS = 'FOS\OAuthServerBundle\Propel\Client';
 
     protected $manager;
 

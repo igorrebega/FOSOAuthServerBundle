@@ -24,6 +24,7 @@ use OAuth2\IOAuth2GrantExtension;
 use OAuth2\IOAuth2GrantImplicit;
 use OAuth2\IOAuth2GrantUser;
 use OAuth2\IOAuth2RefreshTokens;
+use OAuth2\Model\IOAuth2AuthCode;
 use OAuth2\Model\IOAuth2Client;
 use OAuth2\OAuth2;
 use OAuth2\OAuth2ServerException;
@@ -168,7 +169,9 @@ class OAuthStorage implements IOAuth2RefreshTokens, IOAuth2GrantUser, IOAuth2Gra
     }
 
     /**
-     * {@inheritdoc}
+     * @param string $code
+     *
+     * @return IOAuth2AuthCode
      */
     public function getAuthCode($code)
     {

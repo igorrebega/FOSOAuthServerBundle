@@ -92,9 +92,9 @@ class CleanCommandTest extends \PHPUnit\Framework\TestCase
 
         $display = $tester->getDisplay();
 
-        $this->assertContains(sprintf('Removed %d items from %s storage.', $expiredAccessTokens, get_class($this->accessTokenManager)), $display);
-        $this->assertContains(sprintf('Removed %d items from %s storage.', $expiredRefreshTokens, get_class($this->refreshTokenManager)), $display);
-        $this->assertContains(sprintf('Removed %d items from %s storage.', $expiredAuthCodes, get_class($this->authCodeManager)), $display);
+        $this->assertStringContainsString(sprintf('Removed %d items from %s storage.', $expiredAccessTokens, get_class($this->accessTokenManager)), $display);
+        $this->assertStringContainsString(sprintf('Removed %d items from %s storage.', $expiredRefreshTokens, get_class($this->refreshTokenManager)), $display);
+        $this->assertStringContainsString(sprintf('Removed %d items from %s storage.', $expiredAuthCodes, get_class($this->authCodeManager)), $display);
     }
 
     /**
@@ -109,8 +109,8 @@ class CleanCommandTest extends \PHPUnit\Framework\TestCase
 
         $display = $tester->getDisplay();
 
-        $this->assertNotRegExp(sprintf('\'Removed (\d)+ items from %s storage.\'', get_class($this->accessTokenManager)), $display);
-        $this->assertNotRegExp(sprintf('\'Removed (\d)+ items from %s storage.\'', get_class($this->refreshTokenManager)), $display);
-        $this->assertNotRegExp(sprintf('\'Removed (\d)+ items from %s storage.\'', get_class($this->authCodeManager)), $display);
+        $this->assertDoesNotMatchRegularExpression(sprintf('\'Removed (\d)+ items from %s storage.\'', get_class($this->accessTokenManager)), $display);
+        $this->assertDoesNotMatchRegularExpression(sprintf('\'Removed (\d)+ items from %s storage.\'', get_class($this->refreshTokenManager)), $display);
+        $this->assertDoesNotMatchRegularExpression(sprintf('\'Removed (\d)+ items from %s storage.\'', get_class($this->authCodeManager)), $display);
     }
 }

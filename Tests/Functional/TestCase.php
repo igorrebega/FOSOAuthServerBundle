@@ -38,7 +38,7 @@ abstract class TestCase extends WebTestCase
     /**
      * @param array<mixed> $options
      */
-    protected static function createKernel(array $options = [])
+    protected static function createKernel(array $options = []): KernelInterface
     {
         $env = @$options['env'] ?: 'test';
 

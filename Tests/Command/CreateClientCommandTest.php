@@ -80,20 +80,22 @@ class CreateClientCommandTest extends TestCase
 
         $output = $commandTester->getDisplay();
 
-        $this->assertContains('Client ID', $output);
-        $this->assertContains('Client Secret', $output);
+        $this->assertStringContainsString('Client ID', $output);
+        $this->assertStringContainsString('Client Secret', $output);
     }
 
-    /**
-     * @return array
-     */
-    public function clientProvider()
+    public function clientProvider(): array
     {
-        return [
+        $clients = [
             ['FOS\OAuthServerBundle\Document\Client'],
             ['FOS\OAuthServerBundle\Entity\Client'],
             ['FOS\OAuthServerBundle\Model\Client'],
-            ['FOS\OAuthServerBundle\Propel\Client'],
         ];
+
+        if (class_exists('\Propel')) {
+            $clients[] = ['FOS\OAuthServerBundle\Propel\Client'];
+        }
+
+        return $clients;
     }
 }

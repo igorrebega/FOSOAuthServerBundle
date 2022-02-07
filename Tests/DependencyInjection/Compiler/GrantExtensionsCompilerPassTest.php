@@ -178,7 +178,6 @@ class GrantExtensionsCompilerPassTest extends \PHPUnit\Framework\TestCase
                 }
 
                 $storageDefinition
-                    ->expects($this->at(++$idx))
                     ->method('addMethodCall')
                     ->with(
                         'setGrantExtension',

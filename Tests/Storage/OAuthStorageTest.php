@@ -633,6 +633,9 @@ class User implements UserInterface
         $this->username = $username;
     }
 
+    /**
+     * @return string[]
+     */
     public function getRoles()
     {
         return [];
@@ -643,6 +646,9 @@ class User implements UserInterface
         return null;
     }
 
+    /**
+     * @return string|null
+     */
     public function getSalt()
     {
         return null;

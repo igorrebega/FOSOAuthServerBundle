@@ -17,6 +17,7 @@ use FOS\OAuthServerBundle\Propel\AuthCode;
 
 /**
  * @group time-sensitive
+ * @group propel
  *
  * Class AuthCodeTest
  */

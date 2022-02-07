@@ -19,7 +19,7 @@ use FOS\OAuthServerBundle\Propel\om\BaseToken;
 abstract class Token extends BaseToken implements TokenInterface
 {
     /**
-     * {@inheritdoc}
+     * @return mixed
      */
     public function getData()
     {
@@ -27,7 +27,7 @@ abstract class Token extends BaseToken implements TokenInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @return int
      */
     public function getExpiresIn()
     {
@@ -39,7 +39,7 @@ abstract class Token extends BaseToken implements TokenInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @return bool
      */
     public function hasExpired()
     {

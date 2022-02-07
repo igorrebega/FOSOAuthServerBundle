@@ -14,7 +14,7 @@ jobs:
           php-version: '7.4'
           coverage: 'none'
           extensions: 'json, mbstring, tokenizer'
-          tools: 'composer-normalize, php-cs-fixer:2.16.4'
+          tools: 'composer-normalize, php-cs-fixer:3.0.0'
         env:
           update: true
 
@@ -24,7 +24,80 @@ jobs:
           php-cs-fixer --version
 
       - name: 'Check PHP code'
-        run: 'php-cs-fixer fix --diff --dry-run --using-cache=false'
+        run: 'php-cs-fixer fix --diff --dry-run --allow-risky=yes --using-cache=no'
 
       - name: 'Check composer.json'
         run: 'composer-normalize --diff --dry-run --no-update-lock'
+  phpunit:
+    name: "PHPUnit"
+    runs-on: "ubuntu-20.04"
+    continue-on-error: ${{ matrix.can-fail }}
+
+    strategy:
+      matrix:
+        include:
+          - php-version: 7.4
+            composer-flags: "--prefer-stable"
+            symfony-require: "4.4.*"
+            can-fail: false
+          - php-version: 7.4
+            composer-flags: "--prefer-stable"
+            can-fail: false
+            symfony-require: "5.4.*"
+            coverage: yes
+          - php-version: 8.0
+            composer-flags: "--prefer-stable"
+            can-fail: false
+            symfony-require: "5.4.*"
+            ignore-propel: true
+
+    steps:
+      - name: "Checkout"
+        uses: "actions/checkout@v2"
+
+      - name: "Install PHP with XDebug"
+        uses: "shivammathur/setup-php@v2"
+        if: "${{ matrix.coverage != '' }}"
+        with:
+          php-version: "${{ matrix.php-version }}"
+          coverage: "xdebug"
+          tools: "composer:v2,flex"
+
+      - name: "Install PHP without coverage"
+        uses: "shivammathur/setup-php@v2"
+        if: "${{ matrix.coverage == '' }}"
+        with:
+          php-version: "${{ matrix.php-version }}"
+          coverage: "none"
+          tools: "composer:v2,flex"
+
+      - name: "Cache dependencies installed with composer"
+        uses: "actions/cache@v2"
+        with:
+          path: "~/.composer/cache"
+          key: "php-${{ matrix.php-version }}-composer-locked-${{ hashFiles('composer.lock') }}"
+          restore-keys: "php-${{ matrix.php-version }}-composer-locked-"
+
+      - name: "Remove propel if needed"
+        if: "${{ matrix.ignore-propel != '' }}"
+        run: |
+          composer remove propel/propel1 --dev --no-update
+          composer remove willdurand/propel-typehintable-behavior --dev --no-update
+
+      - name: "Install dependencies with composer"
+        env:
+          SYMFONY_REQUIRE: "${{ matrix.symfony-require }}"
+        run: |
+          composer remove friendsofphp/php-cs-fixer --dev --no-update
+          composer update --no-interaction --no-progress ${{ matrix.composer-flags }}
+
+      - name: "Run PHPUnit"
+        if: "${{ matrix.coverage != '' }}"
+        run: |
+          XDEBUG_MODE=coverage ./vendor/bin/phpunit --coverage-clover=coverage.clover
+          wget https://scrutinizer-ci.com/ocular.phar
+          php ocular.phar code-coverage:upload --format=php-clover coverage.clover
+
+      - name: "Run PHPUnit"
+        if: "${{ matrix.coverage == '' }}"
+        run: "./vendor/bin/phpunit"

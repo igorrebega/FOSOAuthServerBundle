@@ -19,12 +19,13 @@ use FOS\OAuthServerBundle\Propel\TokenManager;
 
 /**
  * @group time-sensitive
+ * @group propel
  *
  * Class TokenManagerTest
  */
 class TokenManagerTest extends PropelTestCase
 {
-    const TOKEN_CLASS = 'FOS\OAuthServerBundle\Propel\RefreshToken';
+    private const TOKEN_CLASS = 'FOS\OAuthServerBundle\Propel\RefreshToken';
 
     protected $manager;
 

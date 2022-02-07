@@ -89,6 +89,9 @@ class AuthorizeFormHandlerTest extends \PHPUnit\Framework\TestCase
         parent::setUp();
     }
 
+    /**
+     * @doesNotPerformAssertions
+     */
     public function testConstructWillAcceptRequestObjectAsRequest(): void
     {
         $request = $this->getMockBuilder(Request::class)
@@ -96,12 +99,12 @@ class AuthorizeFormHandlerTest extends \PHPUnit\Framework\TestCase
             ->getMock()
         ;
 
-        $this->instance = new AuthorizeFormHandler($this->form, $request);
-
-        $this->assertAttributeSame($this->form, 'form', $this->instance);
-        $this->assertAttributeSame($request, 'requestStack', $this->instance);
+        new AuthorizeFormHandler($this->form, $request);
     }
 
+    /**
+     * @doesNotPerformAssertions
+     */
     public function testConstructWillAcceptRequestStackObjectAsRequest(): void
     {
         $requestStack = $this->getMockBuilder(RequestStack::class)
@@ -109,21 +112,16 @@ class AuthorizeFormHandlerTest extends \PHPUnit\Framework\TestCase
             ->getMock()
         ;
 
-        $this->instance = new AuthorizeFormHandler($this->form, $requestStack);
-
-        $this->assertAttributeSame($this->form, 'form', $this->instance);
-        $this->assertAttributeSame($requestStack, 'requestStack', $this->instance);
+        new AuthorizeFormHandler($this->form, $requestStack);
     }
 
+    /**
+     * @doesNotPerformAssertions
+     */
     public function testConstructWillAcceptNullAsRequest(): void
     {
-        $this->instance = new AuthorizeFormHandler($this->form, null);
-        $this->assertAttributeSame($this->form, 'form', $this->instance);
-        $this->assertAttributeSame(null, 'requestStack', $this->instance);
-
-        $this->instance = new AuthorizeFormHandler($this->form);
-        $this->assertAttributeSame($this->form, 'form', $this->instance);
-        $this->assertAttributeSame(null, 'requestStack', $this->instance);
+        new AuthorizeFormHandler($this->form, null);
+        new AuthorizeFormHandler($this->form);
     }
 
     public function testConstructWillThrowException(): void
@@ -225,7 +223,6 @@ class AuthorizeFormHandlerTest extends \PHPUnit\Framework\TestCase
         $randomData = \random_bytes(10);
 
         $this->container
-            ->expects($this->at(0))
             ->method('get')
             ->with('request')
             ->willReturn($randomData)
